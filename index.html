@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Press+Start+2P&display=swap"
+        rel="stylesheet">
+    <style>
+        #kao {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+        }
+
+        #kumo {
+            position: absolute;
+            top: 150px;
+            left: 1000px;
+        }
+
+        #star {
+            position: absolute;
+            top: 100px;
+            left: 100px;
+        }
+
+        #key {
+            position: absolute;
+        }
+
+        #dokuro1 {
+            position: absolute;
+            left: 1000px;
+        }
+
+        #dokuro2 {
+            position: absolute;
+            left: 1000px;
+        }
+
+        #dokuro3 {
+            position: absolute;
+            left: 1000px;
+        }
+
+        #dokuro4 {
+            position: absolute;
+            left: 1000px;
+        }
+
+        #obake {
+            position: absolute;
+            left: 1000px;
+        }
+
+        #okane {
+            position: absolute;
+            left: 980px;
+            width: 188px;
+        }
+
+        #bg {
+            width: 1200px;
+            height: 200px;
+            background-color: aquamarine;
+        }
+
+        #time_bg {
+            width: 200px;
+            height: 200px;
+            background-color: dodgerblue;
+            position: absolute;
+            top: 0px;
+            left: 1200px;
+            color: white;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        #gate {
+            width: 20px;
+            background-color: rgb(255, 0, 0);
+            height: 200px;
+            position: absolute;
+            left: 900px;
+            margin: 0;
+        }
+
+        #title_start {
+            width: 1200px;
+            background-color: #9B59B6;
+            height: 200px;
+            position: absolute;
+            left: 0px;
+            margin: 0;
+            color: white;
+            font-family: 'DotGothic16', sans-serif;
+            font-size: 3em;
+            text-align: center;
+        }
+
+        #title_goal {
+            width: 1200px;
+            background-color: #2ECC71;
+            height: 200px;
+            position: absolute;
+            left: 0px;
+            margin: 0;
+            color: white;
+            font-family: 'DotGothic16', sans-serif;
+            font-size: 3em;
+            text-align: center;
+            display: none;
+        }
+
+        #title_score {
+            position: absolute;
+            color: white;
+            font-family: 'Press Start 2P', cursive;
+            top: 80px;
+            left: 550px;
+            font-size: 2em;
+            display: none;
+        }
+
+        #title_highscore {
+            position: absolute;
+            color: white;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1em;
+            top: 30px;
+            display: unset;
+        }
+
+        #title_taoshitakazu {
+            position: absolute;
+            color: white;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1em;
+            top: 55px;
+            display: unset;
+        }
+
+        #title_gameover {
+            position: absolute;
+            color: white;
+            font-family: 'Press Start 2P', cursive;
+            top: 120px;
+            left: 550px;
+            font-size: 2em;
+            display: none;
+        }
+
+        #rock {
+            position: absolute;
+            top: 75px;
+            left: 900px;
+        }
+
+        #mushroom {
+            position: absolute;
+        }
+
+        #start_button {
+            background-color: #ECF0F1;
+            color: #9B59B6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0px 2px 4px grey;
+            width: 150px;
+            border-radius: 15px 15px 15px 15px;
+            height: 40px;
+            text-align: center;
+            position: absolute;
+            left: 516px;
+            top: 120px;
+            font-family: 'DotGothic16', sans-serif;
+            font-size: 1em;
+            border-color: inherit;
+        }
+
+        body {
+            margin: 0;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="bg">
+        <p id="kao">😃</p>
+        <p id="kumo">🕷</p>
+        <p id="dokuro1">💀</p>
+        <p id="dokuro2">💀</p>
+        <p id="dokuro3">💀</p>
+        <p id="dokuro4">💀</p>
+        <p id="obake">👻</p>
+        <p id="star">⭐</p>
+        <p id="gate"></p>
+        <p id="key">🔑</p>
+        <p id="rock">🔒</p>
+        <p id="mushroom">🍄</p>
+        <div id="time_bg">
+            <span id="time"></span>
+            <br>
+            <span id="title_highscore">🏆111</span>
+            <br>
+            <span id="title_taoshitakazu">🔴🔴🔑</span>
+
+        </div>
+        <img id="okane" src="okane.png">
+        <div id="title_start">アドベンチャーゲーム</div>
+        <div id="title_goal">555</div>
+        <div id="title_score">111</div>
+        <div id="title_gameover"></div>
+        <input type="button" id="start_button" value="スタート" onclick="start()">
+
+    </div>
+    <script>
+        var pos_kao_top;
+        var pos_kao_left;
+        var pos_kumo_top;
+        var pos_kumo_left;
+
+        var pos_dokuro1_top;
+        var pos_dokuro1_left;
+        var dokurospeed1;
+        var pos_dokuro2_top;
+        var pos_dokuro2_left;
+        var dokurospeed2;
+        var pos_dokuro3_top;
+        var pos_dokuro3_left;
+        var dokurospeed3;
+        var pos_dokuro4_top;
+        var pos_dokuro4_left;
+        var dokurospeed4;
+        var pos_obake_top;
+        var pos_obake_left;
+        var pos_star_left;
+        var pos_star_top;
+        var pos_key_left;
+        var pos_key_top;
+        var pos_mushroom_left;
+        var pos_mushroom_top;
+
+        var kumo_stop;
+        var dokuro1_stop;
+        var dokuro2_stop;
+        var dokuro3_stop;
+        var dokuro4_stop;
+        var obake_stop;
+
+        var time; //点数
+        var highscore = 1000; //ハイスコア
+        var timer; //定期実行用タイマー
+        var alive;
+        var osokunaru = 1;
+        var osokunaru_timer = 0;
+        var taoshitakazu;
+        var key_deteru;
+        var push_space;
+
+        //音素材
+        var star_get = new Audio();
+        star_get.src = "./star_get.mp3";
+        var goal_sound = new Audio();
+        goal_sound.src = "./goal.mp3";
+        var goal_high_sound = new Audio();
+        goal_high_sound.src = "./goal_high.mp3";
+        var taosu_sound = new Audio();
+        taosu_sound.src = "./taosu.mp3";
+        var loop_sound = new Audio();
+        loop_sound.src = "./loop.mp3";
+        loop_sound.loop = true; //ループ
+        var get_key_sound = new Audio();
+        get_key_sound.src = "./get_key.mp3";
+
+        var get_key = 0;
+
+        //ハイスコア
+        document.getElementById("title_highscore").innerHTML = "🏆" + highscore;
+
+        window.addEventListener("keydown", pushkeydown);
+
+        //スタートボタンを押したら
+        function start() {
+            loop_sound.play()
+            document.getElementById("title_start").style.display = "none";
+            document.getElementById("start_button").style.display = "none";
+            timer = setInterval(teiki, 100);//←１００ミリ秒（０．１秒）
+            pos_kao_top = 0;
+            pos_kao_left = 0;
+            time = 0;
+            alive = 0;
+            get_key = 0;
+            taoshitakazu = 0;
+            key_deteru = 0;
+            pos_kumo_top = 150;
+            pos_kumo_left = 950;
+            pos_dokuro1_left = 1000;
+            pos_dokuro2_left = 1000;
+            pos_dokuro3_left = 1000;
+            pos_dokuro4_left = 1200;
+            pos_dokuro4_top = 70;
+            pos_obake_left = 1000;
+            pos_star_left = 1000;
+            pos_star_top = 100;
+            pos_key_left = 1000;
+            pos_key_top = 100;
+            kumo_stop = 0;
+            dokuro1_stop = 0;
+            dokuro2_stop = 0;
+            dokuro3_stop = 0;
+            dokuro4_stop = 0;
+            obake_stop = 0;
+            push_space = 0;
+            pos_dokuro1_top = Math.floor(Math.random() * 150 + 1);
+            dokurospeed1 = Math.floor(Math.random() * 8 + 1);
+            pos_dokuro2_top = Math.floor(Math.random() * 150 + 1);
+            dokurospeed2 = Math.floor(Math.random() * 8 + 1);
+            pos_dokuro3_top = Math.floor(Math.random() * 150 + 1);
+            dokurospeed3 = Math.floor(Math.random() * 8 + 1);
+            //pos_dokuro4_top = Math.floor(Math.random() * 150 + 1);
+            //dokurospeed4 = Math.floor(Math.random() * 8 + 1);
+            pos_obake_top = Math.floor(Math.random() * 150 + 1);
+            dokurospeed5 = Math.floor(Math.random() * 8 + 1);
+            document.getElementById("title_goal").style.display = "none";
+            document.getElementById("title_score").style.display = "none";
+            document.getElementById("key").style.display = "unset";
+            document.getElementById("rock").style.display = "unset";
+            document.getElementById("gate").style.display = "unset";
+            document.getElementById("kumo").style.display = "unset";
+            document.getElementById("dokuro1").style.display = "unset";
+            document.getElementById("dokuro2").style.display = "unset";
+            document.getElementById("dokuro3").style.display = "unset";
+            document.getElementById("dokuro4").style.display = "unset";
+            document.getElementById("obake").style.display = "unset";
+            document.getElementById("kao").style.top = pos_kao_top + "px";
+            document.getElementById("kao").style.left = pos_kao_left + "px";
+            document.getElementById("key").style.top = pos_key_top + "px";
+            document.getElementById("key").style.left = pos_key_left + "px";
+
+            document.getElementById("title_taoshitakazu").innerHTML = "⚪⚪⚪";
+
+        }
+
+        //定期実行される関数
+        function teiki() {
+            move_kumo();
+            move_dokuro1();
+            move_dokuro2();
+            move_dokuro3();
+            move_dokuro4();
+            move_obake();
+            move_star();
+            move_mushroom();
+            add_time();
+            alive_check();
+            goal();
+            atarihantei_kao();
+            atarihantei_star();
+            atarihantei_key();
+            atarihantei_mushroom();
+            taoshita_count();
+        }
+
+
+        function move_kumo() {
+            if (kumo_stop == 0) {
+                pos_kumo_left = pos_kumo_left + -5;
+                pos_kumo_top = Math.sin(time * 1) * 70 + 50;
+                if (pos_kumo_left >= 1000) {
+                    pos_kumo_left = 0;
+                } else if (pos_kumo_left <= 20) {
+                    pos_kumo_left = 1000;
+                }
+                //キノコに当たったら
+            } else {
+                pos_kumo_left = 2000;
+                document.getElementById("kumo").style.display = "none";
+
+            }
+            document.getElementById("kumo").style.left = pos_kumo_left + "px";
+            document.getElementById("kumo").style.top = pos_kumo_top + "px";
+        }
+        function move_star() {
+            pos_star_left = pos_star_left + -10;
+            if (pos_star_left >= 1000) {
+                pos_star_left = 0;
+            } else if (pos_star_left <= 20) {
+                pos_star_left = 1000;
+                pos_star_top = Math.floor(Math.random() * 150 + 1);
+            }
+            document.getElementById("star").style.left = pos_star_left + "px";
+            document.getElementById("star").style.top = pos_star_top + "px";
+        }
+
+        function move_dokuro1() {
+            if (dokuro1_stop == 0) {
+                pos_dokuro1_left = pos_dokuro1_left + -dokurospeed1 * 10 * osokunaru;
+                if (pos_dokuro1_left >= 1000) {
+                    pos_dokuro1_left = 0;
+                } else if (pos_dokuro1_left <= 20) {
+                    pos_dokuro1_left = 1000;
+                    dokurospeed1 = Math.floor(Math.random() * 8 + 1);
+                    pos_dokuro1_top = Math.floor(Math.random() * 150 + 1);
+                }
+                //キノコに当たったら
+            } else {
+                pos_dokuro1_left = 2000;
+                document.getElementById("dokuro1").style.display = "none";
+            }
+            document.getElementById("dokuro1").style.left = pos_dokuro1_left + "px";
+            document.getElementById("dokuro1").style.top = pos_dokuro1_top + "px";
+        }
+        function move_dokuro2() {
+            if (dokuro2_stop == 0) {
+                pos_dokuro2_left = pos_dokuro2_left + -dokurospeed2 * 10 * osokunaru;
+                if (pos_dokuro2_left >= 1000) {
+                    pos_dokuro2_left = 0;
+                } else if (pos_dokuro2_left <= 20) {
+                    pos_dokuro2_left = 1000;
+                    dokurospeed2 = Math.floor(Math.random() * 8 + 1);
+                    pos_dokuro2_top = Math.floor(Math.random() * 150 + 1);
+                }
+                //キノコに当たったら
+            } else {
+                pos_dokuro2_left = 2000;
+                document.getElementById("dokuro2").style.display = "none";
+            }
+            document.getElementById("dokuro2").style.left = pos_dokuro2_left + "px";
+            document.getElementById("dokuro2").style.top = pos_dokuro2_top + "px";
+        }
+        function move_dokuro3() {
+            if (dokuro3_stop == 0) {
+                pos_dokuro3_left = pos_dokuro3_left + -dokurospeed3 * 10 * osokunaru;
+                if (pos_dokuro3_left >= 1000) {
+                    pos_dokuro3_left = 0;
+                } else if (pos_dokuro3_left <= 20) {
+                    pos_dokuro3_left = 1000;
+                    dokurospeed3 = Math.floor(Math.random() * 8 + 1);
+                    pos_dokuro3_top = Math.floor(Math.random() * 150 + 1);
+                }
+                //キノコに当たったら
+            } else {
+                pos_dokuro3_left = 2000;
+                document.getElementById("dokuro3").style.display = "none";
+            }
+            document.getElementById("dokuro3").style.left = pos_dokuro3_left + "px";
+            document.getElementById("dokuro3").style.top = pos_dokuro3_top + "px";
+        }
+        function move_dokuro4() {
+            //if (dokuro4_stop == 0) {
+            //pos_dokuro4_left = pos_dokuro4_left + -dokurospeed4 * 10 * osokunaru;
+            //if (pos_dokuro4_left >= 1000) {
+            //pos_dokuro4_left = 0;
+            //} else if (pos_dokuro4_left <= 20) {
+            //pos_dokuro4_left = 1000;
+            //dokurospeed4 = Math.floor(Math.random() * 8 + 1);
+            //pos_dokuro4_top = Math.floor(Math.random() * 150 + 1);
+            //}
+            //キノコに当たったら
+            //} else {
+            //pos_dokuro4_left = 2000;
+            // document.getElementById("dokuro4").style.display = "none";
+            //}
+            document.getElementById("dokuro4").style.left = pos_dokuro4_left + "px";
+            document.getElementById("dokuro4").style.top = pos_dokuro4_top + "px";
+        }
+        function move_obake() {
+            if (obake_stop == 0) {
+                var kyori_x = pos_kao_left - pos_obake_left;
+                var kyori_y = pos_kao_top - pos_obake_top;
+                var kakudo = Math.atan2(kyori_y, kyori_x);
+                pos_obake_left = pos_obake_left + Math.cos(kakudo) * 7;
+                pos_obake_top = pos_obake_top + Math.sin(kakudo) * 7;
+                // if (pos_obake_left >= 1000) {
+                //     pos_obake_left = 0;
+                // } else if (pos_obake_left <= 0) {
+                //     pos_obake_left = 1000;
+                //     dokurospeed5 = Math.floor(Math.random() * 8 + 1);
+                //     pos_obake_top = Math.floor(Math.random() * 150 + 1);
+                // }
+                //キノコに当たったら
+            } else {
+                pos_obake_left = 2000;
+                document.getElementById("obake").style.display = "none";
+            }
+            document.getElementById("obake").style.left = pos_obake_left + "px";
+            document.getElementById("obake").style.top = pos_obake_top + "px";
+        }
+
+        function move_mushroom() {
+            if (pos_mushroom_left >= 900) {
+                push_space = 0
+                pos_mushroom_left = pos_kao_left;
+                pos_mushroom_top = pos_kao_top;
+            }
+            else {
+                if (push_space == 0) {
+                    pos_mushroom_left = Math.sin(time * 7) * 50 + pos_kao_left;
+                    pos_mushroom_top = Math.cos(time * 7) * 50 + pos_kao_top;
+                }
+                else {
+                    pos_mushroom_left = pos_mushroom_left + 50;
+                }
+                document.getElementById("mushroom").style.left = pos_mushroom_left + "px";
+                document.getElementById("mushroom").style.top = pos_mushroom_top + "px";
+            }
+
+        }
+
+        function atarihantei_kao() {
+            if (
+                (pos_kao_top - pos_kumo_top < 20 &&
+                    pos_kao_top - pos_kumo_top > -20 &&
+                    pos_kao_left - pos_kumo_left < 20 &&
+                    pos_kao_left - pos_kumo_left > -20) ||
+                (pos_kao_top - pos_dokuro1_top < 20 &&
+                    pos_kao_top - pos_dokuro1_top > -20 &&
+                    pos_kao_left - pos_dokuro1_left < 20 &&
+                    pos_kao_left - pos_dokuro1_left > -20) ||
+                (pos_kao_top - pos_dokuro2_top < 20 &&
+                    pos_kao_top - pos_dokuro2_top > -20 &&
+                    pos_kao_left - pos_dokuro2_left < 20 &&
+                    pos_kao_left - pos_dokuro2_left > -20) ||
+                (pos_kao_top - pos_dokuro3_top < 20 &&
+                    pos_kao_top - pos_dokuro3_top > -20 &&
+                    pos_kao_left - pos_dokuro3_left < 20 &&
+                    pos_kao_left - pos_dokuro3_left > -20) ||
+                (pos_kao_top - pos_dokuro4_top < 20 &&
+                    pos_kao_top - pos_dokuro4_top > -20 &&
+                    pos_kao_left - pos_dokuro4_left < 20 &&
+                    pos_kao_left - pos_dokuro4_left > -20) ||
+                (pos_kao_top - pos_obake_top < 20 &&
+                    pos_kao_top - pos_obake_top > -20 &&
+                    pos_kao_left - pos_obake_left < 20 &&
+                    pos_kao_left - pos_obake_left > -20)
+
+            ) {
+                //ゲームオーバー
+                //音を止める
+                loop_sound.pause();
+                loop_sound.currentTime = 0;
+                document.getElementById("title_goal").style.backgroundColor = "#E74C3C";
+                document.getElementById("title_goal").innerHTML = "ゲームオーバー";
+                document.getElementById("start_button").value = "リトライ";
+                document.getElementById("title_goal").style.display = "unset";
+                document.getElementById("title_gameover").style.display = "unset";
+                document.getElementById("start_button").style.display = "unset";
+                clearInterval(timer);
+                alive = 0;
+            }
+        }
+
+        //星に当たった時
+        function atarihantei_star() {
+            //一定期間で戻る
+            if (
+                osokunaru_timer == 0
+            ) {
+                osokunaru = 1;
+                document.getElementById("bg").style.backgroundColor = "aquamarine";
+            } else {
+                osokunaru_timer = osokunaru_timer - 1;
+                document.getElementById("bg").style.backgroundColor = "#ffeb3b";
+                pos_star_left = 0;
+            }
+
+            //星の当たり判定
+            if (
+                (pos_kao_top - pos_star_top < 20 &&
+                    pos_kao_top - pos_star_top > -20 &&
+                    pos_kao_left - pos_star_left < 20 &&
+                    pos_kao_left - pos_star_left > -20)
+            ) {
+                osokunaru = 0.1;
+                osokunaru_timer = 10;//１秒
+                star_get.play();
+            }
+        }
+
+        //鍵の位置
+        function key_dasu() {
+            pos_key_left = Math.floor(Math.random() * (600 - 400) + 400);
+            pos_key_top = Math.floor(Math.random() * (150 - 75) + 75);
+            document.getElementById("key").style.left = pos_key_left + "px";
+            document.getElementById("key").style.top = pos_key_top + "px";
+        }
+
+
+        //鍵に当たった時
+        function atarihantei_key() {
+            //倒した数が3以上かつ鍵が出ていないとき鍵を出す
+            if (taoshitakazu >= 3 && key_deteru == 0) {
+                key_dasu();
+                key_deteru = 1;
+            }
+            //鍵の当たり判定
+            if (
+                (pos_kao_top - pos_key_top < 20 &&
+                    pos_kao_top - pos_key_top > -20 &&
+                    pos_kao_left - pos_key_left < 20 &&
+                    pos_kao_left - pos_key_left > -20)
+            ) {
+                get_key_sound.play();
+                get_key = 1;
+                pos_key_left = 2000;
+                document.getElementById("key").style.left = pos_key_left;
+                document.getElementById("key").style.display = "none";
+                document.getElementById("rock").style.display = "none";
+                document.getElementById("gate").style.display = "none";
+            }
+        }
+
+        // キノコの当たり判定
+        function atarihantei_mushroom() {
+            var yoko_range = 40;
+            if (pos_mushroom_top - pos_kumo_top < yoko_range && pos_mushroom_top - pos_kumo_top > yoko_range * -1 &&
+                pos_mushroom_left - pos_kumo_left < yoko_range && pos_mushroom_left - pos_kumo_left > yoko_range * -1) {
+                taosu_sound.play();
+                kumo_stop = 1;
+                taoshitakazu++;
+            }
+            else if (pos_mushroom_top - pos_dokuro1_top < yoko_range && pos_mushroom_top - pos_dokuro1_top > yoko_range * -1 &&
+                pos_mushroom_left - pos_dokuro1_left < yoko_range && pos_mushroom_left - pos_dokuro1_left > yoko_range * -1) {
+                taosu_sound.play();
+                dokuro1_stop = 1;
+                taoshitakazu++;
+            }
+            else if (pos_mushroom_top - pos_dokuro2_top < yoko_range && pos_mushroom_top - pos_dokuro2_top > yoko_range * -1 &&
+                pos_mushroom_left - pos_dokuro2_left < yoko_range && pos_mushroom_left - pos_dokuro2_left > yoko_range * -1) {
+                taosu_sound.play();
+                dokuro2_stop = 1;
+                taoshitakazu++;
+            }
+            else if (pos_mushroom_top - pos_dokuro3_top < yoko_range && pos_mushroom_top - pos_dokuro3_top > yoko_range * -1 &&
+                pos_mushroom_left - pos_dokuro3_left < yoko_range && pos_mushroom_left - pos_dokuro3_left > yoko_range * -1) {
+                taosu_sound.play();
+                dokuro3_stop = 1;
+                taoshitakazu++;
+            }
+            else if (pos_mushroom_top - pos_dokuro4_top < yoko_range && pos_mushroom_top - pos_dokuro4_top > yoko_range * -1 &&
+                pos_mushroom_left - pos_dokuro4_left < yoko_range && pos_mushroom_left - pos_dokuro4_left > yoko_range * -1) {
+                taosu_sound.play();
+                dokuro4_stop = 1;
+                taoshitakazu++;
+            }
+            else if (pos_mushroom_top - pos_obake_top < yoko_range && pos_mushroom_top - pos_obake_top > yoko_range * -1 &&
+                pos_mushroom_left - pos_obake_left < yoko_range && pos_mushroom_left - pos_obake_left > yoko_range * -1) {
+                taosu_sound.play();
+                obake_stop = 1;
+                taoshitakazu++;
+            }
+        }
+        //ゴール
+        function goal() {
+            if (
+                pos_kao_left >= 975
+            ) {
+                //音を止める
+                loop_sound.pause();
+                loop_sound.currentTime = 0;
+                document.getElementById("title_goal").style.display = "unset";
+                document.getElementById("title_goal").innerHTML = "クリア！！";
+                document.getElementById("title_goal").style.backgroundColor = "#2ECC71";
+                document.getElementById("title_score").innerHTML = Math.round(time * 10) / 10;
+                document.getElementById("title_score").style.display = "unset";
+                document.getElementById("start_button").value = "リトライ";
+                document.getElementById("start_button").style.display = "unset";
+
+                //ハイスコアの時には四捨五入して書き換える
+                if (highscore > time) {
+                    highscore = Math.floor(time * Math.pow(10, 1)) / Math.pow(10, 1);
+                    goal_high_sound.play();
+                    document.getElementById("title_highscore").innerHTML = "🏆" + highscore;
+                } else {
+                    goal_sound.play();
+                }
+                clearInterval(timer);
+                alive = 0;
+                //alert("ゴール　time:" + time)
+            }
+        }
+
+        //敵を倒したカウントを変える
+        function taoshita_count() {
+            var x;
+            if (taoshitakazu == 0) {
+                x = "🔴🔴🔑";
+            }
+            else if (taoshitakazu == 1) {
+                x = "🟢🔴🔑";
+            }
+            else if (taoshitakazu == 2) {
+                x = "🟢🟢🔑";
+            }
+            else if (taoshitakazu >= 3) {
+                x = "🟢🟢🟢";
+            }
+            document.getElementById("title_taoshitakazu").innerHTML = x;
+        }
+
+        function alive_check() {
+            alive = 1;
+        }
+        //タイムをふやす
+        function add_time() {
+            time = time + 0.1;
+            document.getElementById("time").innerHTML = "⏱" + Math.floor(time * Math.pow(10, 1)) / Math.pow(10, 1);
+        }
+        //キーが押されたら動く関数
+        function pushkeydown(event) {
+
+            var keycode = event.key;
+            console.log("keycode " + keycode);
+            if (keycode == "s" && pos_kao_top <= 145 && alive == 1) {
+                pos_kao_top = pos_kao_top + 10;
+                document.getElementById("kao").style.top = pos_kao_top + "px";
+                atarihantei_kao();
+            }
+            if (keycode == "w" && pos_kao_top >= 0 && alive == 1) {
+                pos_kao_top = pos_kao_top - 10;
+                document.getElementById("kao").style.top = pos_kao_top + "px";
+                atarihantei_kao();
+            }
+            if (keycode == "a" && pos_kao_left >= 10 && alive == 1) {
+                pos_kao_left = pos_kao_left - 10;
+                document.getElementById("kao").style.left = pos_kao_left + "px";
+                atarihantei_kao();
+            }
+            if (keycode == "d" && pos_kao_left <= 1000 && alive == 1) {
+                pos_kao_left = pos_kao_left + 10;
+                document.getElementById("kao").style.left = pos_kao_left + "px";
+                atarihantei_kao();
+            }
+            if (keycode == " " && alive == 1) {
+                push_space = 1;
+                pos_mushroom_left = pos_kao_left;
+                pos_mushroom_top = pos_kao_top;
+
+
+            }
+            if (pos_kao_left >= 880 && get_key == 0) {
+                pos_kao_left = pos_kao_left - 10;
+            }
+
+        }
+        //範囲・キノコの修正
+    </script>
+</body>
+
+</html>
